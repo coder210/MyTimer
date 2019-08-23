@@ -1,0 +1,13 @@
+INPUT(
+./release\main.o
+./release\MyTimerWidget.o
+./release\lua-mytimer.o
+./release\lua-animation.o
+./release\lua-button.o
+./release\lua-label.o
+./release\lua-widget.o
+./release\lua-qt.o
+./release\MyLabel.o
+./release\moc_MyTimerWidget.o
+./release\moc_MyLabel.o
+);
