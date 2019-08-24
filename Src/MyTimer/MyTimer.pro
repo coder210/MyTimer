@@ -1,4 +1,4 @@
-QT += widgets gui
+QT += widgets gui sql
 CONFIG += C++11
 
 INCLUDEPATH += E:/lua/lua53dll
@@ -13,7 +13,8 @@ HEADERS += \
     lualib-src/lua-widget.h \
     lualib-src/lua-qt.h \
     mytimer-src/MyLabel.h \
-    lualib-src/lua-qttimer.h
+    lualib-src/lua-qttimer.h \
+    lualib-src/lua-db.h
 
 SOURCES += \
     mytimer-src/main.cpp \
@@ -25,4 +26,5 @@ SOURCES += \
     lualib-src/lua-widget.cpp \
     lualib-src/lua-qt.cpp \
     mytimer-src/MyLabel.cpp \
-    lualib-src/lua-qttimer.cpp
+    lualib-src/lua-qttimer.cpp \
+    lualib-src/lua-db.cpp

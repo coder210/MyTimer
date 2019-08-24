@@ -40,6 +40,10 @@ function MyWidget:move(x, y)
 	widget.move(self.id, x, y)
 end
 
+function MyWidget:close()
+	widget.close(self.id);
+end
+
 function MyWidget:setParent(parentId)
 	widget.setParent(self.id, parentId);
 end

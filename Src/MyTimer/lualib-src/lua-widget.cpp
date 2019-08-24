@@ -52,6 +52,13 @@ public:
         return 0;
     }
 
+    static int close(lua_State* L)
+    {
+        QWidget* widget = (QWidget*)lua_tointeger(L, 1);
+        widget->close();
+        return 0;
+    }
+
     static int setParent(lua_State* L)
     {
         QWidget* widget = (QWidget*)lua_tointeger(L, 1);
@@ -69,6 +76,7 @@ const luaL_Reg widgetLib[] = {
     {"setFixedSize", LuaWidget::setFixedSize},
     {"setStyleSheet", LuaWidget::setStyleSheet},
     {"move", LuaWidget::move},
+    {"close", LuaWidget::close},
     {"setParent", LuaWidget::setParent},
     {NULL, NULL}
 };

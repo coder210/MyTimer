@@ -183,6 +183,7 @@ Makefile: ../MyTimer/MyTimer.pro D:/Qt/Qt5.4.0/5.4/mingw491_32/mkspecs/win32-g++
 		D:/Qt/Qt5.4.0/5.4/mingw491_32/lib/Qt5Cored.prl \
 		D:/Qt/Qt5.4.0/5.4/mingw491_32/lib/Qt5Widgets.prl \
 		D:/Qt/Qt5.4.0/5.4/mingw491_32/lib/Qt5Gui.prl \
+		D:/Qt/Qt5.4.0/5.4/mingw491_32/lib/Qt5Sql.prl \
 		D:/Qt/Qt5.4.0/5.4/mingw491_32/lib/Qt5Core.prl
 	$(QMAKE) -spec win32-g++ CONFIG+=debug -o Makefile ..\MyTimer\MyTimer.pro
 D:\Qt\Qt5.4.0\5.4\mingw491_32\mkspecs\features\spec_pre.prf:
@@ -309,6 +310,7 @@ D:/Qt/Qt5.4.0/5.4/mingw491_32/lib/qtmaind.prl:
 D:/Qt/Qt5.4.0/5.4/mingw491_32/lib/Qt5Cored.prl:
 D:/Qt/Qt5.4.0/5.4/mingw491_32/lib/Qt5Widgets.prl:
 D:/Qt/Qt5.4.0/5.4/mingw491_32/lib/Qt5Gui.prl:
+D:/Qt/Qt5.4.0/5.4/mingw491_32/lib/Qt5Sql.prl:
 D:/Qt/Qt5.4.0/5.4/mingw491_32/lib/Qt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -spec win32-g++ CONFIG+=debug -o Makefile ..\MyTimer\MyTimer.pro

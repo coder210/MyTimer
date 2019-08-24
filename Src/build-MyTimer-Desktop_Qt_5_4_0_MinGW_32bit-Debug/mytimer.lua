@@ -33,6 +33,7 @@ local timerSpan = 0;
 
 local qtTimer = nil;
 local panel = nil;
+local widget = nil
 -- 1: 开始
 local btnArray = {};
 
@@ -55,13 +56,12 @@ function triggerTimer()
 	end
 end
 
-function stop()
-	if qtTimer then
-		--qtTimer:stop()
-	end
+function save()
+	
 end
 
-function btn3Click()
+function exit()
+	widget:close()
 	qt.debug("lua btn3Click call")
 end
 
@@ -92,7 +92,7 @@ end
 function start(parentId)
 
 	-- 设置窗口大小
-	local widget = mywidget:new();
+	widget = mywidget:new();
 	widget:setId(parentId);
 	widget:setFixedSize(r * 2 + btnSize.w, r * 2 + btnSize.h);
 	
@@ -123,22 +123,22 @@ function start(parentId)
 	
 	btnArray[2] = mybutton:new();
 	btnArray[2]:setId();
-	btnArray[2]:setText("暂停");
+	btnArray[2]:setText("保存");
 	btnArray[2]:setFixedSize(btnSize.w, btnSize.h);
 	btnArray[2]:setStyleSheet("QPushButton{ background-color:#333333; color: #ccc; font-size: 12px; border-radius: 25px; }");
 	btnArray[2]:move(btnStartX, btnStartY);
-	btnArray[2]:setClickEvent("stop");
+	btnArray[2]:setClickEvent("save");
 	btnArray[2]:setParent(parentId);
 	
 	
 	btnArray[3] = mybutton:new();
 	btnArray[3]:setId();
-	btnArray[3]:setText("保存");
+	btnArray[3]:setText("退出");
 	btnArray[3]:setFixedSize(btnSize.w, btnSize.h);
 	btnArray[3]:setStyleSheet("QPushButton{ background-color:#333333; color: #ccc; font-size: 12px; border-radius: 25px; }");
 	btnArray[3]:move(btnStartX, btnStartY);
 	btnArray[3]:setParent(parentId);
-	btnArray[3]:setClickEvent("btn3Click");
+	btnArray[3]:setClickEvent("exit");
 	
 	panel:setParent(parentId);
 	panel:setDbClicked("panelDbClick");

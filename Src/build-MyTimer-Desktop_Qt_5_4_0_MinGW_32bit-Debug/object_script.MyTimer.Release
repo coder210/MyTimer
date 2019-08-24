@@ -9,6 +9,7 @@ INPUT(
 ./release\lua-qt.o
 ./release\MyLabel.o
 ./release\lua-qttimer.o
+./release\lua-db.o
 ./release\moc_MyTimerWidget.o
 ./release\moc_MyLabel.o
 );
