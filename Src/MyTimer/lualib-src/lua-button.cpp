@@ -24,6 +24,14 @@ public:
     }
 
 
+    static int getText(lua_State* L)
+    {
+        QPushButton* button = (QPushButton*)lua_tointeger(L, 1);
+        QString txt = button->text();
+        lua_pushstring(L, txt.toUtf8().constData());
+        return 1;
+    }
+
     static int setClickEvent(lua_State* L)
     {
         QPushButton* button = (QPushButton*)lua_tointeger(L, 1);
@@ -47,6 +55,7 @@ public:
 const luaL_Reg buttonLib[] = {
     {"newButton", LuaButton::newButton},
     {"setText", LuaButton::setText},
+    {"getText", LuaButton::getText},
     {"setClickEvent", LuaButton::setClickEvent},
     {NULL, NULL}
 };

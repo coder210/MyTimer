@@ -12,7 +12,8 @@ HEADERS += \
     lualib-src/lua-label.h \
     lualib-src/lua-widget.h \
     lualib-src/lua-qt.h \
-    mytimer-src/MyLabel.h
+    mytimer-src/MyLabel.h \
+    lualib-src/lua-qttimer.h
 
 SOURCES += \
     mytimer-src/main.cpp \
@@ -23,4 +24,5 @@ SOURCES += \
     lualib-src/lua-label.cpp \
     lualib-src/lua-widget.cpp \
     lualib-src/lua-qt.cpp \
-    mytimer-src/MyLabel.cpp
+    mytimer-src/MyLabel.cpp \
+    lualib-src/lua-qttimer.cpp

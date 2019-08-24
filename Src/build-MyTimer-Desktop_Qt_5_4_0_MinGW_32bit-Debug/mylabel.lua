@@ -10,15 +10,15 @@ end
 
 
 function MyLabel:setText(text)
-	label.setText(MyLabel.id, text)
+	label.setText(self.id, text)
 end
 
 function MyLabel:setTextCenter()
-	label.setTextCenter(MyLabel.id)
+	label.setTextCenter(self.id)
 end
 
 function MyLabel:setDbClicked(funcName)
-	label.setDbClicked(MyLabel.id, funcName)
+	label.setDbClicked(self.id, funcName)
 end
 
 

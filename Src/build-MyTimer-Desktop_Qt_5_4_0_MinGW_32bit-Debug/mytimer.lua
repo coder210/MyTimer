@@ -3,9 +3,10 @@ local mylabel = require("mylabel")
 local mywidget = require("mywidget")
 local myanimation = require("myanimation")
 local qt = require("qt")
+local qttimer = require("qttimer")
 
 -- 半径
-local r = 200
+local r = 250
 
 -- 按钮大小
 local btnSize = {
@@ -15,8 +16,8 @@ local btnSize = {
 
 -- 面板大小
 local panelSize = {
-	w = 100,
-	h = 100
+	w = 80,
+	h = 80
 }
 
 -- 设置动画
@@ -25,13 +26,51 @@ local backAnimat = {}
 
 local go = true;
 
+local timerSpan = 0;
 
-function btn2Click()
-	qt.debug("lua btn2Click call")
+
+-------------------------------------控件开始-----------------------------------------------------
+
+local qtTimer = nil;
+local panel = nil;
+-- 1: 开始
+local btnArray = {};
+
+-------------------------------------控件结束-----------------------------------------------------
+
+
+------------------------------------事件开始----------------------------------------------
+function triggerTimer()
+	if qtTimer then
+		local txt = btnArray[1]:getText()
+		qt.debug(txt)
+		if txt == "开始" then
+			qtTimer:start(1000)
+			btnArray[1]:setText("暂停")
+		else
+			qtTimer:stop()
+			btnArray[1]:setText("开始")
+		end
+			
+	end
+end
+
+function stop()
+	if qtTimer then
+		--qtTimer:stop()
+	end
 end
 
 function btn3Click()
 	qt.debug("lua btn3Click call")
+end
+
+function timerOutEvent()
+	timerSpan = timerSpan + 1;
+	if panel then
+		local datetimeStr = qt.timeSpan2Datetime(timerSpan)
+		panel:setText(datetimeStr)
+	end
 end
 
 -- panel双击事件
@@ -41,12 +80,14 @@ function panelDbClick()
 			goAnimate[i]:start()
 		end
 	else
-		for i = 1, #goAnimate, 1 do
+		for i = 1, #backAnimat, 1 do
 			backAnimat[i]:start()
 		end
 	end
 	go = not go
 end
+
+---------------------------------------事件结束-------------------------------------------
 
 function start(parentId)
 
@@ -57,12 +98,12 @@ function start(parentId)
 	
 	
 	-- 创建panel
-	local panel = mylabel:new();
+	panel = mylabel:new();
 	panel:setId()
-	panel:setText("确定");
+	panel:setText("00:00:00");
 	panel:setFixedSize(panelSize.w, panelSize.h);
 	panel:setTextCenter();
-	panel:setStyleSheet("QLabel{background-color:#333333;color:#eee;font-size:20px;font-weight:bold;border-radius:10px;}");
+	panel:setStyleSheet("QLabel{background-color:#333333;color:#eee;font-size:14px;font-weight:bold;border-radius:20px;}");
 	panel:move((widget:getWidth() - panel:getWidth()) / 2, (widget:getHeight() - panel:getHeight()) / 2);
 	
 	
@@ -71,9 +112,6 @@ function start(parentId)
 	local btnStartY = (widget:getHeight() - btnSize.h) / 2;
 	
 	
-	-- 创建button
-	local btnArray = {};
-	
 	btnArray[1] = mybutton:new();
 	btnArray[1]:setId();
 	btnArray[1]:setText("开始");
@@ -81,7 +119,7 @@ function start(parentId)
 	btnArray[1]:setStyleSheet("QPushButton{ background-color:#333333; color: #ccc; font-size: 12px; border-radius: 25px; }");
 	btnArray[1]:move(btnStartX, btnStartY);
 	btnArray[1]:setParent(parentId);
-	
+	btnArray[1]:setClickEvent("triggerTimer");
 	
 	btnArray[2] = mybutton:new();
 	btnArray[2]:setId();
@@ -89,7 +127,7 @@ function start(parentId)
 	btnArray[2]:setFixedSize(btnSize.w, btnSize.h);
 	btnArray[2]:setStyleSheet("QPushButton{ background-color:#333333; color: #ccc; font-size: 12px; border-radius: 25px; }");
 	btnArray[2]:move(btnStartX, btnStartY);
-	btnArray[2]:setClickEvent("btn2Click");
+	btnArray[2]:setClickEvent("stop");
 	btnArray[2]:setParent(parentId);
 	
 	
@@ -107,16 +145,16 @@ function start(parentId)
 	
 	-- 设置坐标
 	local toPostions = {}
-	toPostions[1] = getTargetPostion(btnStartX, btnStartY, 30, r);
-	toPostions[2] = getTargetPostion(btnStartX, btnStartY, 60, r);
-	toPostions[3] = getTargetPostion(btnStartX, btnStartY, 90, r);
+	toPostions[1] = qt.getTargetPostion(btnStartX, btnStartY, 120, r);
+	toPostions[2] = qt.getTargetPostion(btnStartX, btnStartY, 150, r);
+	toPostions[3] = qt.getTargetPostion(btnStartX, btnStartY, 180, r);
 
 	
 	for k = 1, #btnArray, 1 do
 		
 		goAnimate[k] = myanimation:newAnimation()
 		
-		--qt.debug("x=" .. toPostions[k].x .. "y=" .. toPostions[k].y .. "id = " .. goAnimate[k]:getId() .. "|btnid = " .. btnArray[k]:getId())
+		qt.debug("x=" .. toPostions[k].x .. "y=" .. toPostions[k].y .. "id = " .. goAnimate[k]:getId() .. "|btnid = " .. btnArray[k]:getId())
 		
 		goAnimate[k]:setTargetObject(btnArray[k]:getId())
 		goAnimate[k]:setPropertyName("pos")
@@ -128,37 +166,19 @@ function start(parentId)
 		backAnimat[k] = myanimation:newAnimation()
 		backAnimat[k]:setTargetObject(btnArray[k]:getId())
 		backAnimat[k]:setPropertyName("pos")
-		backAnimat[k]:setDuration(100* k)
+		backAnimat[k]:setDuration(100 * k)
 		backAnimat[k]:setStartValue(toPostions[k].x, toPostions[k].y)
 		backAnimat[k]:setEndValue(btnStartX, btnStartY)
 	end
 	
 	
-	return 1;
-end
-
-
--- 获取到目标坐标
--- startX: x轴起始点
--- startY: y轴起始点
--- ang: 角度
--- r: 半径
--- 返回目标点坐标
-function getTargetPostion(startX, startY, ang, r)
-	local cosValue = math.cos(ang * degree());
-	local disX = cosValue * r;
+	-- 设置定时器
+	qtTimer = qttimer:new()
+	qtTimer:setId()
+	qtTimer:setTimeoutEvent("timerOutEvent")
+	qtTimer:setParent(parentId)
 	
-	local sinValue = math.sin(ang * degree());
-	local disY = sinValue * r;
-
-	return { 
-		x = (startX + disX), 
-		y = (startY + disY)
-	};
-end
-
-
--- 角度转弧度
-function degree()
-    return math.pi / 180;
+	
+	
+	return 1;
 end

@@ -4,6 +4,7 @@
 #include "../lualib-src/lua-label.h"
 #include "../lualib-src/lua-widget.h"
 #include "../lualib-src/lua-qt.h"
+#include "../lualib-src/lua-qttimer.h"
 #include <QDebug>
 
 
@@ -27,6 +28,7 @@ QList<WidgetData>* luaMain(QWidget* parent)
     luaL_requiref(L, "label", luaopenLabel, 1);
     luaL_requiref(L, "widget", luaopenWidget, 1);
     luaL_requiref(L, "qt", luaopenQt, 1);
+    luaL_requiref(L, "timer", luaopenQtTimer, 1);
 
     if (luaL_dofile(L, "mytimer.lua") != 0)
     {

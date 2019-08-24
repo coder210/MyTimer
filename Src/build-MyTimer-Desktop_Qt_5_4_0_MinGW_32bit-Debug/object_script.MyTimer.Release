@@ -8,6 +8,7 @@ INPUT(
 ./release\lua-widget.o
 ./release\lua-qt.o
 ./release\MyLabel.o
+./release\lua-qttimer.o
 ./release\moc_MyTimerWidget.o
 ./release\moc_MyLabel.o
 );
